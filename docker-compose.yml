@@ -1,0 +1,9 @@
+version: "3"
+services:
+  osrm:
+    image: ghcr.io/project-osrm/osrm-backend
+    command: osrm-routed --algorithm mld /data/berlin-latest.osrm
+    volumes:
+      - ./data:/data
+    ports:
+      - 5000:5000
