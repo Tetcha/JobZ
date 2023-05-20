@@ -33,7 +33,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
     return (
         <div className="flex flex-col justify-start h-full min-h-screen">
             <MainNavbar />
-            <div className="pt-24">{children}</div>
+            <div className="">{children}</div>
             {/* <MainSideBar /> */}
             {/* <MainFooter /> */}
         </div>

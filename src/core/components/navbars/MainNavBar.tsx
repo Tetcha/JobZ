@@ -56,7 +56,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                             <ul className="flex items-center justify-center gap-5">
                                 {navlink.map((item) => (
                                     <Link key={item.id} href={item.path}>
-                                        <li className="px-4 py-2 text-white bg-indigo-500 cursor-pointer rounded-3xl">{item.name}</li>
+                                        <li className="px-4 py-2 font-semibold text-white bg-indigo-500 cursor-pointer rounded-3xl">{item.name}</li>
                                     </Link>
                                 ))}
                             </ul>

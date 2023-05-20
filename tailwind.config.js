@@ -56,6 +56,9 @@ module.exports = {
             borderRadius: {
                 '2lg': '0.625rem',
             },
+            screens: {
+                app: '1172px',
+            },
             transitionProperty: {
                 height: 'height',
                 width: 'width',
