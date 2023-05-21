@@ -48,7 +48,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                     className="rounded-l-2xl text-gray-900 placeholder:text-gray-600 w-full max-w-[528px] bg-gray-200  outline-none px-4 py-2 h-full "
                                 />
                                 <button className="flex items-center justify-center w-16 h-full bg-indigo-500 rounded-r-2xl">
-                                    <MagnifyingGlassIcon className="w-8 h-8" />
+                                    <MagnifyingGlassIcon className="w-6 h-6" />
                                 </button>
                             </div>
                         </div>

@@ -1,3 +1,4 @@
+import JobCard from '@components/cards/JobCard';
 import { ArrowDownIcon, Bars3Icon, ListBulletIcon, MagnifyingGlassIcon, TableCellsIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import * as React from 'react';
@@ -97,27 +98,27 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-between w-full ">
-                        <div className="flex flex-col items-start bg-white w-72">
-                            <div className="flex flex-col gap-6 px-5 border border-gray-200 py-9">
+                    <div className="flex justify-between w-full gap-7">
+                        <div className="flex flex-col items-start w-72">
+                            <div className="flex flex-col gap-6 px-5 bg-white border border-gray-200 py-9">
                                 <label className="text-2xl font-semibold text-gray-900">Tìm kiếm</label>
                                 <div className="flex items-center w-full bg-gray-100">
                                     <input type="text" className="w-full bg-gray-100 border-none outline-none" />
 
                                     <button className="w-10">
-                                        <MagnifyingGlassIcon className="w-8 h-8" />
+                                        <MagnifyingGlassIcon className="w-6 h-6" />
                                     </button>
                                 </div>
                             </div>
-                            <div className="flex flex-col w-full gap-6 px-5 border border-gray-200 py-9">
+                            <div className="flex flex-col w-full gap-6 px-5 bg-white border border-gray-200 py-9">
                                 <label className="text-2xl font-semibold text-gray-900">Mức Lương</label>
                                 <div className="flex items-center justify-between w-full text-lg">
-                                    <input type="number" name="" id="" className="border-none outline-none w-28" />
+                                    <input type="number" defaultValue={100} name="" id="" className="bg-gray-100 border-none outline-none w-28" />
                                     <span className="text-3xl">-</span>
-                                    <input type="number" name="" id="" className="border-none outline-none w-28" />
+                                    <input type="number" defaultValue={500} name="" id="" className="bg-gray-100 border-none outline-none w-28" />
                                 </div>
                             </div>
-                            <div className="flex flex-col items-start w-full gap-6 px-5 border border-gray-200 py-9">
+                            <div className="flex flex-col items-start w-full gap-6 px-5 bg-white border border-gray-200 py-9">
                                 <label className="text-2xl font-semibold text-gray-900">Lĩnh Vực</label>
                                 <div className="flex flex-col items-start">
                                     {majors.map((item) => (
@@ -130,7 +131,7 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex flex-col items-start w-full gap-6 px-5 border border-gray-200 py-9">
+                            <div className="flex flex-col items-start w-full gap-6 px-5 bg-white border border-gray-200 py-9">
                                 <label className="text-2xl font-semibold text-gray-900">Kĩ Năng</label>
                                 <div className="flex flex-col items-start">
                                     {skills.map((item) => (
@@ -143,6 +144,20 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                                     ))}
                                 </div>
                             </div>
+                        </div>
+                        <div className="grid w-full grid-cols-3 gap-6 ">
+                            {Array.from({ length: 9 }).map((_, index) => (
+                                <JobCard
+                                    key={index}
+                                    id={'1'}
+                                    company="FPT Telecom"
+                                    companyLogo="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
+                                    salary="$200.00 - $350.00"
+                                    thumbnail="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
+                                    title="Marketing Intern"
+                                    tag="Marketing"
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
