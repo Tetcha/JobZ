@@ -1,8 +1,7 @@
+import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import * as React from 'react';
 import { v4 as uuid } from 'uuid';
-
-import { MagnifyingGlassIcon, Bars3Icon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
 
 interface MainNavbarProps {}
 
@@ -16,7 +15,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
         {
             name: 'Việc làm',
             id: uuid(),
-            path: '/jobs',
+            path: '/job',
         },
         {
             name: 'Công ty',
@@ -69,12 +68,14 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                 <img src={'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg'} alt="avatar" />
                             </div>
                         </div>
-                        <div className="relative">
+                        <div className="relative ">
                             <Bars3Icon className="w-10 h-10 text-indigo-400 cursor-pointer" onClick={() => setToggle(!toggle)} />
-                            {toggle && (
-                                <div className="absolute right-0 flex w-24 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
+                            {toggle ? (
+                                <div className="absolute right-0 z-[999] flex w-24 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
                                     <button className="w-full">Đăng xuất</button>
                                 </div>
+                            ) : (
+                                <></>
                             )}
                         </div>
                     </div>
