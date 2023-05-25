@@ -1,3 +1,4 @@
+import AuthLogin from '@features/auth/AuthLogin';
 import { NextPage } from 'next';
 import * as React from 'react';
 
@@ -11,7 +12,7 @@ const LoginPage: NextPage<LoginPageProps> = ({}) => {
     return (
         <>
             <CommonSeo title="Login" />
-            <div>Login</div>
+            <AuthLogin />
         </>
     );
 };
