@@ -1,6 +1,4 @@
 import CandidateCard from '@components/cards/CandidateCard';
-import JobCard from '@components/cards/JobCard';
-import { ArrowDownIcon, Bars3Icon, ListBulletIcon, MagnifyingGlassIcon, TableCellsIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import * as React from 'react';
 import { v4 as uuid } from 'uuid';
@@ -69,7 +67,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = () => {
     return (
         <div className="flex flex-col justify-center w-full">
             <div className="flex flex-col items-center justify-center w-full gap-2 bg-gray-200 h-96">
-                <h1 className="text-6xl font-semibold text-gray-900">Danh Sách ứng viên ứng tuyển</h1>
+                <h1 className="text-6xl font-semibold text-gray-900">Danh sách ứng viên ứng tuyển</h1>
                 <div className="flex items-center justify-center gap-2 mt-2 text-lg font-medium text-gray-700">
                     <Link href={'/'}>
                         <p className="cursor-pointer hover:text-blue-600">Home</p>
