@@ -17,15 +17,20 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
             id: uuid(),
             path: '/job',
         },
-        {
-            name: 'Công ty',
-            id: uuid(),
-            path: '/companies',
-        },
+        // {
+        //     name: 'Công ty',
+        //     id: uuid(),
+        //     path: '/companies',
+        // },
         {
             name: 'Vị trí đã ứng tuyển',
             id: uuid(),
             path: '/applied-jobs',
+        },
+        {
+            name: 'Danh sách ứng viên',
+            id: uuid(),
+            path: '/candidate',
         },
     ];
 
@@ -63,7 +68,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                     </div>
                     <div className="flex items-center justify-center">
                         <div className="flex items-center gap-2">
-                            <p className="text-base font-medium text-gray-800">Phạm Vinh Tài</p>
+                            <p className="text-base font-medium text-gray-800">Tài</p>
                             <div className="overflow-hidden rounded-full h-14 w-14">
                                 <img src={'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg'} alt="avatar" />
                             </div>
@@ -72,9 +77,11 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                             <Bars3Icon className="w-10 h-10 text-indigo-400 cursor-pointer" onClick={() => setToggle(!toggle)} />
                             {toggle ? (
                                 <div className="absolute right-0 z-[999] flex flex-col w-24 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
-                                    <button className="w-full">Đăng xuất</button>
                                     <Link href={'/auth/login'}>
-                                        <button className="w-full">Đăng nhập</button>
+                                        <button className="border-b-2 border-solid border-white">Đăng nhập</button>
+                                    </Link>
+                                    <Link href={''}>
+                                        <button className="w-full">Đăng xuất</button>
                                     </Link>
                                 </div>
                             ) : (
