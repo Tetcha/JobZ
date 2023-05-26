@@ -35,13 +35,13 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
         <>
             {/* main desktop menu sart*/}
             <div className="flex justify-center py-1 bg-white">
-                <header className="flex justify-between w-full max-w-7xl">
+                <header className="flex items-center justify-between w-full max-w-7xl">
                     <div className="flex items-center justify-center gap-6">
                         <div className="flex items-center justify-center gap-2">
                             <Link href="/">
                                 <img src="/assets/images/logo.png" className="h-16 cursor-pointer" alt="Job Z" />
                             </Link>
-                            <div className="flex items-center w-full h-9">
+                            {/* <div className="flex items-center w-full h-9">
                                 <input
                                     placeholder="Tìm kiếm"
                                     className="rounded-l-2xl text-gray-900 placeholder:text-gray-600 w-full max-w-[528px] bg-gray-200  outline-none px-4 py-2 h-full "
@@ -49,18 +49,18 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                 <button className="flex items-center justify-center w-16 h-full bg-indigo-500 rounded-r-2xl">
                                     <MagnifyingGlassIcon className="w-6 h-6" />
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
-                        <nav>
-                            <ul className="flex items-center justify-center gap-5">
-                                {navlink.map((item) => (
-                                    <Link key={item.id} href={item.path}>
-                                        <li className="px-4 py-2 font-semibold text-white bg-indigo-500 cursor-pointer rounded-3xl">{item.name}</li>
-                                    </Link>
-                                ))}
-                            </ul>
-                        </nav>
                     </div>
+                    <nav>
+                        <ul className="flex items-center justify-center gap-5">
+                            {navlink.map((item) => (
+                                <Link key={item.id} href={item.path}>
+                                    <li className="px-4 py-2 font-semibold text-white bg-indigo-500 cursor-pointer rounded-3xl">{item.name}</li>
+                                </Link>
+                            ))}
+                        </ul>
+                    </nav>
                     <div className="flex items-center justify-center">
                         <div className="flex items-center gap-2">
                             <p className="text-base font-medium text-gray-800">Phạm Vinh Tài</p>

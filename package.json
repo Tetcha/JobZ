@@ -45,6 +45,7 @@
         "react-spinners": "^0.13.8",
         "react-table": "^7.8.0",
         "react-toastify": "^9.0.8",
+        "react-toggle-hook": "^0.0.2-alpha",
         "redux-saga": "^1.2.3",
         "swiper": "^9.0.5",
         "universal-cookie": "^4.0.4",
