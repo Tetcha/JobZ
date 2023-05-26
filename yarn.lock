@@ -2386,6 +2386,11 @@ react-toastify@^9.0.8:
   dependencies:
     clsx "^1.1.1"
 
+react-toggle-hook@^0.0.2-alpha:
+  version "0.0.2-alpha"
+  resolved "https://registry.yarnpkg.com/react-toggle-hook/-/react-toggle-hook-0.0.2-alpha.tgz#6bcd03c37acce630078bfa0edb3118d5a7d033bd"
+  integrity sha512-kg812bz7kQMTqcW2FqVBlkH4ox28M3C3kcqkZ7ofRZC+wZ0p2YZeAUQf1dBrKTjNQ2s+P1Cu5aEfl5UIhfJHuQ==
+
 react@17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"

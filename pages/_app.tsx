@@ -15,6 +15,7 @@ import { store } from '../src/core/store';
 const queryClient = new QueryClient({});
 
 import 'react-toastify/dist/ReactToastify.css';
+import { ToggleProvider } from 'react-toggle-hook';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -22,18 +23,20 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FEMBDB700Z" />
             <Script type="text/javascript" src="/static/js/google.script.js" />
             <Provider store={store}>
-                <AutoLoginWrapper>
-                    <QueryClientProvider client={queryClient}>
-                        <ThemeProvider enableSystem={true} attribute="class">
-                            <ToastContainer autoClose={1500} />
-                            <ProgressLoadingBar />
-                            <DynamicLayout>
-                                <Component {...pageProps} />
-                            </DynamicLayout>
-                            <ReactQueryDevtools initialIsOpen={false} />
-                        </ThemeProvider>
-                    </QueryClientProvider>
-                </AutoLoginWrapper>
+                <ToggleProvider>
+                    <AutoLoginWrapper>
+                        <QueryClientProvider client={queryClient}>
+                            <ThemeProvider enableSystem={true} attribute="class">
+                                <ToastContainer autoClose={1500} />
+                                <ProgressLoadingBar />
+                                <DynamicLayout>
+                                    <Component {...pageProps} />
+                                </DynamicLayout>
+                                <ReactQueryDevtools initialIsOpen={false} />
+                            </ThemeProvider>
+                        </QueryClientProvider>
+                    </AutoLoginWrapper>
+                </ToggleProvider>
             </Provider>
         </>
     );
