@@ -2,6 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import * as React from 'react';
 import { useToggleContext } from 'react-toggle-hook';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 interface ApplyJobModalProps {}
 
@@ -16,9 +17,11 @@ interface ApplyJobDTO {
 const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = () => {
     const { close, isOpen, value } = useToggleContext<string>('apply-job');
     const { register, handleSubmit } = useForm<ApplyJobDTO>();
+    const router = useRouter();
 
     const onSubmit = (data: ApplyJobDTO) => {
         console.log(data);
+        router.push('/applied-jobs/1');
         close();
     };
 

@@ -46,7 +46,7 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
             action: () => {
                 open('');
             },
-            status: StepStatus.Current,
+            status: StepStatus.Upcoming,
         },
         { name: 'Đồng ý nhận làm việc', description: 'Chúc mừng bạn đã ứng tuyển thành công', action: () => {}, status: StepStatus.Upcoming },
     ];
