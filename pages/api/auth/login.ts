@@ -2,6 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@root/prisma/client';
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (req.method === 'GET') {
+        return res.status(200).json({ message: 'WTF' });
+    }
+
     if (req.method === 'POST') {
         // Process a POST request
 
