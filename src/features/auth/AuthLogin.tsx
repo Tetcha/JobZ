@@ -1,4 +1,5 @@
 import { http } from '@core/api';
+import { config } from '@core/config';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,7 +29,7 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
 
     const onSubmit = (data: LoginDTO) => {
         data.role = role;
-        fetch('http://localhost:3000/api/auth/login', {
+        fetch(`${config.SERVER_URL}/auth/login`, {
             method: 'POST',
             body: JSON.stringify(data),
         }).then(async (res) => {
