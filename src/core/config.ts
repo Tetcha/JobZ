@@ -5,3 +5,5 @@ export const config = {
     SERVER_SOCKET_PATH: process.env.SERVER_SOCKET_PATH || '/socket.io',
     minDistance: process.env.MIN_DISTANCE || 20000,
 };
+
+console.log('config', config);
