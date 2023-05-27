@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import * as React from 'react';
 import Link from 'next/link';
+import * as React from 'react';
 
 interface AppliedJobsPageProps {}
 
