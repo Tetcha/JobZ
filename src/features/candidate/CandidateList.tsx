@@ -31,7 +31,7 @@ const CandidateList: React.FunctionComponent<CandidateListProps> = () => {
                                 id={'1'}
                                 name={'Nguyễn Văn Hải'}
                                 avatar={'/images/avatars/creator_2.jpg'}
-                                position={'front-end developer'}
+                                position={'Front-end Developer'}
                                 socialLink={[]}
                             />
                         ))}
