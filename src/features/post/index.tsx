@@ -2,9 +2,19 @@ import Link from 'next/link';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { FormPostRecruitDTO } from './interface';
-
 interface PostRecruitProps {}
+
+interface FormPostRecruitDTO {
+    nameJob: string;
+    typeJob: string;
+    salary: string;
+    phone: string;
+    quantity: number;
+    email: string;
+    dateSubmit: string;
+    address: string;
+    descriptionJob: string;
+}
 
 const defaultValues: FormPostRecruitDTO = {
     nameJob: '',

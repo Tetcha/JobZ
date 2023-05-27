@@ -25,7 +25,7 @@ const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = () => {
     return (
         <>
             {isOpen && (
-                <div className="fixed top-0 left-0 z-10 flex flex-col items-center justify-center w-full h-full bg-gray-900/50">
+                <div className="fixed top-0 left-0 z-10 flex flex-col items-center justify-center w-full h-full bg-gray-900/50 min-h-screen">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="relative grid w-full max-w-2xl grid-cols-1 p-4 bg-white rounded gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2"

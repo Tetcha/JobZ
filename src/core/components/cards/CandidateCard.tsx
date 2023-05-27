@@ -21,7 +21,7 @@ const CandidateCard: React.FunctionComponent<CandidateCardProps> = ({ id, name, 
                     {tag}
                 </div>
             </Link> */}
-            <Link href={''}>
+            <Link href={`/candidate/${id}`}>
                 <div className="flex flex-col justify-center items-center cursor-pointer gap-4">
                     <div className="w-40 h-40 overflow-hidden rounded-2xl">
                         <img src={avatar} className="object-cover w-full h-full rounded-full" alt="" />

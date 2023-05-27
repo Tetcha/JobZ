@@ -76,9 +76,12 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                         <div className="relative ">
                             <Bars3Icon className="w-10 h-10 text-indigo-400 cursor-pointer" onClick={() => setToggle(!toggle)} />
                             {toggle ? (
-                                <div className="absolute right-0 z-[999] flex flex-col w-24 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
+                                <div className="absolute right-0 z-[999] flex flex-col w-40 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
                                     <Link href={'/auth/login'}>
                                         <button className="border-b-2 border-solid border-white">Đăng nhập</button>
+                                    </Link>
+                                    <Link href={'/post-new-recruit'}>
+                                        <button className="w-full border-b-2 border-solid">Đăng bài</button>
                                     </Link>
                                     <Link href={''}>
                                         <button className="w-full">Đăng xuất</button>
