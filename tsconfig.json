@@ -26,7 +26,8 @@
             "@utils/*": ["./src/core/utils/*"],
             "@core/*": ["./src/core/*"],
             "@features/*": ["./src/features/*"],
-            "@public/*": ["./public/*"]
+            "@public/*": ["./public/*"],
+            "@root/*": ["./*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

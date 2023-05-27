@@ -8,33 +8,33 @@ import { useForm } from 'react-hook-form';
 
 interface AuthLoginProps {}
 
-interface LoginDTO {
+interface RegisterDTO {
     email: string;
     password: string;
+    name: string;
     role: string;
 }
 
-const defaultValues: LoginDTO = {
+const defaultValues: RegisterDTO = {
     email: '',
     password: '',
+    name: '',
     role: 'USER',
 };
 
-const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
-    const { register, handleSubmit } = useForm<LoginDTO>({ defaultValues });
-
+const AuthRegister: React.FunctionComponent<AuthLoginProps> = () => {
+    const { register, handleSubmit } = useForm<RegisterDTO>({ defaultValues });
     const [role, setRole] = React.useState<string>('USER');
+
     const router = useRouter();
 
-    const onSubmit = (data: LoginDTO) => {
+    const onSubmit = (data: RegisterDTO) => {
         data.role = role;
-        fetch('http://localhost:3000/api/auth/login', {
+        fetch('http://localhost:3000/api/auth/register', {
             method: 'POST',
             body: JSON.stringify(data),
-        }).then(async (res) => {
-            const data = await res.json();
-            localStorage.setItem('user', JSON.stringify(data));
-            // router.push('/auth/login');
+        }).then((res) => {
+            router.push('/auth/login');
         });
     };
 
@@ -46,12 +46,18 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
                     <Link href="/">
                         <img src="/assets/images/logo.png" className="object-cover cursor-pointer h-28" alt="Job Z" />
                     </Link>
-                    <p className="text-3xl font-bold">Đăng nhập JobZ</p>
+                    <p className="text-3xl font-bold">Đăng ký JobZ</p>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="flex flex-col border-2 border-solid border-black rounded-lg  p-4 h-auto min-w-[400px] my-6"
                     >
                         <div className="flex flex-col items-center w-full bg-gray-100 gap-y-6">
+                            <input
+                                {...register('name')}
+                                type="text"
+                                className="w-full border-2 border-black border-solid rounded-lg"
+                                placeholder="Tên của bạn"
+                            />
                             <input
                                 {...register('email')}
                                 type="email"
@@ -69,21 +75,21 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
                                 onClick={() => setRole('USER')}
                                 className="w-full px-4 py-2 font-semibold text-white bg-indigo-700 rounded-lg cursor-pointer"
                             >
-                                Đăng nhập
+                                Đăng ký
                             </button>
                             <button
                                 type="submit"
                                 onClick={() => setRole('BUSINESS')}
                                 className="w-full px-4 py-2 font-semibold text-white bg-indigo-700 rounded-lg cursor-pointer"
                             >
-                                Đăng nhập cho doanh nghiệp
+                                Đăng ký cho doanh nghiệp
                             </button>
                         </div>
                     </form>
 
-                    <Link href="/auth/register">
+                    <Link href="/auth/login">
                         <button className="w-full px-4 py-2 my-4 font-semibold border-2 border-black border-solid rounded-lg cursor-pointer ">
-                            Bạn chưa có tài khoản? <span className="text-blue-600">Đăng ký ngay</span>
+                            Bạn đã có tài khoản? <span className="text-blue-600">Đăng nhập ngay</span>
                         </button>
                     </Link>
                 </div>
@@ -92,4 +98,4 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
     );
 };
 
-export default AuthLogin;
+export default AuthRegister;

@@ -78,7 +78,7 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                             {toggle ? (
                                 <div className="absolute right-0 z-[999] flex flex-col w-40 px-2 py-2 overflow-hidden text-white bg-indigo-500 rounded-md top-12">
                                     <Link href={'/auth/login'}>
-                                        <button className="border-b-2 border-solid border-white">Đăng nhập</button>
+                                        <button className="border-b-2 border-white border-solid">Đăng nhập</button>
                                     </Link>
                                     <Link href={'/post-new-recruit'}>
                                         <button className="w-full border-b-2 border-solid">Đăng bài</button>
