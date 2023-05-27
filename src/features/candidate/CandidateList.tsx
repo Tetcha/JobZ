@@ -6,64 +6,6 @@ import { v4 as uuid } from 'uuid';
 interface CandidateListProps {}
 
 const CandidateList: React.FunctionComponent<CandidateListProps> = () => {
-    const majors = [
-        {
-            name: 'Mechanic',
-            id: uuid(),
-        },
-        {
-            name: 'Engineer',
-            id: uuid(),
-        },
-        {
-            name: 'Computer Science',
-            id: uuid(),
-        },
-        {
-            name: 'Data & Tech',
-            id: uuid(),
-        },
-        {
-            name: 'UX & UI Design',
-            id: uuid(),
-        },
-        {
-            name: 'English',
-            id: uuid(),
-        },
-        {
-            name: 'Mobile Handset',
-            id: uuid(),
-        },
-    ];
-
-    const skills = [
-        {
-            name: 'All',
-            id: uuid(),
-        },
-        {
-            name: 'Fullstack',
-            id: uuid(),
-        },
-        {
-            name: 'English Learn',
-            id: uuid(),
-        },
-        {
-            name: 'Intermediate',
-            id: uuid(),
-        },
-        {
-            name: 'PHP',
-            id: uuid(),
-        },
-        {
-            name: 'Wordpress',
-            id: uuid(),
-        },
-    ];
-
     return (
         <div className="flex flex-col justify-center w-full">
             <div className="flex flex-col items-center justify-center w-full gap-2 bg-gray-200 h-96">
