@@ -106,7 +106,7 @@ export const MainFooter: React.FC<MainFooterProps> = () => {
             <div className="px-6 pt-16 pb-8 mx-auto max-w-7xl sm:pt-24 lg:px-8 lg:pt-32">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     <div className="space-y-8">
-                        <img className="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Company name" />
+                        <img className="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Post name" />
                         <p className="text-sm leading-6 text-gray-300">Making the world a better place through constructing elegant hierarchies.</p>
                         <div className="flex space-x-6">
                             {navigation.social.map((item) => (
@@ -146,7 +146,7 @@ export const MainFooter: React.FC<MainFooterProps> = () => {
                         </div>
                         <div className="md:grid md:grid-cols-2 md:gap-8">
                             <div>
-                                <h3 className="text-sm font-semibold leading-6 text-white">Company</h3>
+                                <h3 className="text-sm font-semibold leading-6 text-white">Post</h3>
                                 <ul role="list" className="mt-6 space-y-4">
                                     {navigation.company.map((item) => (
                                         <li key={item.name}>
@@ -173,7 +173,7 @@ export const MainFooter: React.FC<MainFooterProps> = () => {
                     </div>
                 </div>
                 <div className="pt-8 mt-16 border-t border-white/10 sm:mt-20 lg:mt-24">
-                    <p className="text-xs leading-5 text-gray-400">&copy; 2020 Your Company, Inc. All rights reserved.</p>
+                    <p className="text-xs leading-5 text-gray-400">&copy; 2020 Your Post, Inc. All rights reserved.</p>
                 </div>
             </div>
         </footer>

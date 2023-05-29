@@ -14,7 +14,7 @@ interface JobCardProps {
 
 const JobCard: React.FunctionComponent<JobCardProps> = ({ id, company, companyLogo, salary, thumbnail, title, tag, tagHexColor = '#B128FF' }) => {
     return (
-        <div className="relative px-3 py-3.5 bg-white rounded-md">
+        <div className="relative px-3 h-fit py-3.5 bg-white rounded-md">
             <Link href={`/job?tag=${tag}`}>
                 <div
                     className="absolute px-2 py-1 text-xs font-medium text-white bg-red-400 rounded-sm top-5 left-5"

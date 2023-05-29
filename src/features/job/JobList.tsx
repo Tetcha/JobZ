@@ -1,5 +1,9 @@
 import JobCard from '@components/cards/JobCard';
+import { config } from '@core/config';
 import { ArrowDownIcon, Bars3Icon, ListBulletIcon, MagnifyingGlassIcon, TableCellsIcon } from '@heroicons/react/24/solid';
+import { Post } from '@models/company';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import Link from 'next/link';
 import * as React from 'react';
 import { v4 as uuid } from 'uuid';
@@ -64,6 +68,17 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
             id: uuid(),
         },
     ];
+
+    const { data: posts } = useQuery<Post[]>(
+        ['jobs'],
+        async () => {
+            const res = await axios.get(`${config.SERVER_URL}/post`);
+            return res.data;
+        },
+        {
+            initialData: [],
+        }
+    );
 
     return (
         <div className="flex flex-col justify-center w-full">
@@ -146,16 +161,16 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                             </div>
                         </div>
                         <div className="grid w-full grid-cols-3 gap-6 ">
-                            {Array.from({ length: 9 }).map((_, index) => (
+                            {posts.map((post) => (
                                 <JobCard
-                                    key={index}
-                                    id={'1'}
-                                    company="FPT Telecom"
+                                    key={post.id}
+                                    id={post.id}
+                                    company={post.name}
                                     companyLogo="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
-                                    salary="$200.00 - $350.00"
+                                    salary={post.jobDetail.salary}
                                     thumbnail="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
-                                    title="Marketing Intern"
-                                    tag="Marketing"
+                                    title={`${post.jobDetail.title} - ${post.jobDetail.type}`}
+                                    tag={post.hireJob}
                                 />
                             ))}
                         </div>

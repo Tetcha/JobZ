@@ -9,6 +9,7 @@ import { ThemeProvider } from 'next-themes';
 import { ToastContainer } from 'react-toastify';
 
 import { DynamicLayout, ProgressLoadingBar } from '../src/core/components';
+import 'react-quill/dist/quill.snow.css';
 
 const queryClient = new QueryClient({});
 

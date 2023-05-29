@@ -1,32 +1,71 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-  provider = "postgresql"
-
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider          = "postgresql"
+  url               = env("POSTGRES_PRISMA_URL")
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  password  String
-  role      Role     @default(USER)
-  balance   Int      @default(0)
+  id       String  @id @default(uuid())
+  email    String  @unique
+  name     String?
+  password String
+  role     Role    @default(USER)
+  balance  Int     @default(0)
 }
-
 
 enum Role {
   BUSINESS
   USER
 }
+
+model Post {
+  id        String   @id @default(uuid())
+  images    String[] @default([])
+  name      String
+  otherJobs String[] @default([])
+  hireJob   String
+  updateAt  String 
+  descriptions String
+  jobDetail JobDetail? @relation("JobDetailToPost")
+  requires  Require[]   @relation("RequireToPost")
+  ratings   Rating[]    @relation("RatingToPost") 
+}
+
+model JobDetail {
+  id        String   @id @default(uuid())
+  title     String
+  quantity  String  @default("")
+  type      String
+  applied   Int     @default(0)
+  address   String
+  department String
+  length    String
+  salary    String
+  expired   String
+  status    String
+  postId    String @unique
+  post      Post     @relation("JobDetailToPost",fields: [postId], references: [id])
+}
+
+model Require {
+  id String @id @default(uuid())
+  name String
+  details String
+  post Post @relation("RequireToPost",fields: [postId], references: [id])
+  postId String
+}
+
+model Rating {
+  id String @id @default(uuid())
+  post Post @relation("RatingToPost",fields: [postId], references: [id])
+  postId String
+  rating Int
+  comment String
+  avatar String
+  name String
+}
+

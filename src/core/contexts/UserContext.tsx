@@ -6,6 +6,9 @@ import { useLocalStorage } from 'usehooks-ts';
 export interface UserProps {
     user: User;
     isLogin: boolean;
+    setUser: (user: User) => void;
+    updateIsLogin: () => void;
+    handleReset: () => void;
 }
 
 const defaultValues: UserProps = {
@@ -17,6 +20,9 @@ const defaultValues: UserProps = {
         role: 'USER',
     },
     isLogin: false,
+    setUser: () => {},
+    updateIsLogin: () => {},
+    handleReset: () => {},
 };
 
 export const UserContext = React.createContext<UserProps>(defaultValues);
@@ -40,7 +46,21 @@ export const UserProviderContext: React.FC<LoadingProviderProps> = ({ children }
         }
     }, []);
 
-    return <UserContext.Provider value={{ isLogin, user }}>{children}</UserContext.Provider>;
+    const updateIsLogin = () => {
+        const user = JSON.parse(localStorage.getItem('user') as string) as User;
+        if (Boolean(user.id)) {
+            setIsLogin(true);
+        } else {
+            setIsLogin(false);
+        }
+    };
+
+    const handleReset = () => {
+        setUser(defaultValues.user);
+        setIsLogin(false);
+    };
+
+    return <UserContext.Provider value={{ isLogin, user, setUser, updateIsLogin, handleReset }}>{children}</UserContext.Provider>;
 };
 
 export function useUserContext() {

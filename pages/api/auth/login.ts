@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@root/prisma/client';
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { body } = req;
     if (req.method === 'GET') {
         return res.status(200).json({ message: 'WTF' });
     }
@@ -10,7 +11,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         // Process a POST request
 
         try {
-            const body = JSON.parse(req.body);
             const data = await prisma.user.findUnique({
                 where: {
                     email: body.email,

@@ -1,9 +1,24 @@
-version: "3"
+version: '3'
 services:
-  osrm:
-    image: ghcr.io/project-osrm/osrm-backend
-    command: osrm-routed --algorithm mld /data/berlin-latest.osrm
-    volumes:
-      - ./data:/data
-    ports:
-      - 5000:5000
+    postgres-jobz:
+        image: postgres
+        restart: on-failure
+        environment:
+            - POSTGRES_DB=jobz
+            - POSTGRES_USER=postgresdocker
+            - POSTGRES_PASSWORD=1234567890
+        volumes:
+            - ./postgres_data:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+        networks:
+            - tetcha
+    # client-jobz:
+    #     image: jobz
+    #     ports:
+    #         - 3000:3000
+    #     networks:
+    #         - tetcha
+networks:
+    tetcha:
+        external: true

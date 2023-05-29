@@ -1,4 +1,5 @@
 import { http } from '@core/api';
+import { config } from '@core/config';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,12 +31,16 @@ const AuthRegister: React.FunctionComponent<AuthLoginProps> = () => {
 
     const onSubmit = (data: RegisterDTO) => {
         data.role = role;
-        fetch('http://localhost:3000/api/auth/register', {
-            method: 'POST',
-            body: JSON.stringify(data),
-        }).then((res) => {
+
+        axios.post(`${config.SERVER_URL}/auth/register`, data).then((res) => {
             router.push('/auth/login');
         });
+        // fetch('http://localhost:3000/api/auth/register', {
+        //     method: 'POST',
+        //     body: JSON.stringify(data),
+        // }).then((res) => {
+        //     router.push('/auth/login');
+        // });
     };
 
     return (

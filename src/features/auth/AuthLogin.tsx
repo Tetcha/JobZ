@@ -1,3 +1,4 @@
+import { useUserContext } from '@context/UserContext';
 import { http } from '@core/api';
 import { config } from '@core/config';
 import axios from 'axios';
@@ -27,15 +28,15 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
     const [role, setRole] = React.useState<string>('USER');
     const router = useRouter();
 
+    const { setUser, updateIsLogin } = useUserContext();
+
     const onSubmit = (data: LoginDTO) => {
         data.role = role;
-        fetch(`${config.SERVER_URL}/auth/login`, {
-            method: 'POST',
-            body: JSON.stringify(data),
-        }).then(async (res) => {
-            const data = await res.json();
-            localStorage.setItem('user', JSON.stringify(data));
-            // router.push('/auth/login');
+
+        axios.post(`${config.SERVER_URL}/auth/login`, data).then((res) => {
+            setUser(res.data);
+            updateIsLogin();
+            router.push('/');
         });
     };
 

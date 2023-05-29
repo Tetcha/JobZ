@@ -1,6 +1,6 @@
 import { Tab } from '@headlessui/react';
 import { StarIcon } from '@heroicons/react/20/solid';
-import { Company } from '@models/company';
+import { Post } from '@models/company';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
@@ -10,18 +10,27 @@ import { useToggleContext } from 'react-toggle-hook';
 import ApplyJobModal from '@components/modals/ApplyJobModal';
 
 interface JobDetailProps {
-    company: Company;
+    post: Post;
 }
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ');
 }
 
-const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
+const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
     const { open } = useToggleContext<string>('apply-job', {
         // extraOpenAction is called after close action
         extraCloseAction: () => {},
     });
+
+    const [averageRating, setAverageRating] = React.useState(0);
+
+    React.useEffect(() => {
+        if (post.ratings.length > 0) {
+            const sum = post.ratings.reduce((acc, item) => acc + item.rating, 0);
+            setAverageRating(sum / post.ratings.length);
+        }
+    }, [post]);
 
     return (
         <>
@@ -62,7 +71,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                             modules={[Pagination, Navigation, Autoplay]}
                             className="h-full w-[820px] rounded-xl overflow-hidden"
                         >
-                            {company.images.map((item, i) => (
+                            {post.images.map((item, i) => (
                                 <SwiperSlide key={i}>
                                     <img className="w-[820px] h-full object-cover" src={item} />
                                 </SwiperSlide>
@@ -74,7 +83,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                     <div className="mx-auto max-w-2xl px-4 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pt-16">
                         <div className="flex items-center w-full col-span-2 lg:border-r lg:border-gray-200 ">
                             <div className="flex flex-col w-full gap-2">
-                                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{company.name}</h1>
+                                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{post.name}</h1>
                             </div>
                             <button
                                 onClick={() => open('')}
@@ -91,13 +100,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                                 <h3 className="text-2xl font-medium text-gray-900">Miêu tả công việc</h3>
 
                                 <div className="mt-4">
-                                    <ul role="list" className="pl-4 space-y-2 text-sm list-disc">
-                                        {company.descriptions.map((item) => (
-                                            <li key={item} className="text-gray-400">
-                                                <span className="text-gray-600">{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    <span dangerouslySetInnerHTML={{ __html: post.descriptions }} />
                                 </div>
                             </div>
 
@@ -109,45 +112,45 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                                     <div className="flex flex-col w-full gap-5 pr-4 bg-gray-200 border-r border-gray-400 py-14 pl-11">
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Loại công việc:</p>
-                                            <p className="text-gray-900">{company.jobDetail.title}</p>
+                                            <p className="text-gray-900">{post.jobDetail.title}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Số lượng cần tuyển:</p>
-                                            <p className="text-gray-900">{company.jobDetail.quantity} người</p>
+                                            <p className="text-gray-900">{post.jobDetail.quantity} người</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Loại hình công việc:</p>
-                                            <p className="text-gray-900">{company.jobDetail.type}</p>
+                                            <p className="text-gray-900">{post.jobDetail.type}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Đã ứng tuyển:</p>
-                                            <p className="text-gray-900">{company.jobDetail.applied}</p>
+                                            <p className="text-gray-900">{post.jobDetail.applied}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Địa điểm:</p>
-                                            <p className="text-gray-900">{company.jobDetail.address}</p>
+                                            <p className="text-gray-900">{post.jobDetail.address}</p>
                                         </div>
                                     </div>
                                     <div className="flex flex-col w-full gap-5 pr-4 bg-gray-200 py-14 pl-11">
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Đơn vị quản lý:</p>
-                                            <p className="text-gray-900">{company.jobDetail.department}</p>
+                                            <p className="text-gray-900">{post.jobDetail.department}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Thời gian:</p>
-                                            <p className="text-gray-900">{company.jobDetail.length}</p>
+                                            <p className="text-gray-900">{post.jobDetail.length}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Mức lương</p>
-                                            <p className="text-gray-900">{company.jobDetail.salary}</p>
+                                            <p className="text-gray-900">{post.jobDetail.salary}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Hạn nộp hồ sơ:</p>
-                                            <p className="text-gray-900">{company.jobDetail.expired}</p>
+                                            <p className="text-gray-900">{post.jobDetail.expired}</p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="font-bold text-gray-600">Trạng thái:</p>
-                                            <p className="text-gray-900">{company.jobDetail.status}</p>
+                                            <p className="text-gray-900">{post.jobDetail.status}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +158,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                             <section aria-labelledby="shipping-heading" className="mt-10">
                                 <h2 className="mb-2 text-2xl font-medium text-gray-900">Tag</h2>
                                 <div className="flex flex-wrap w-full gap-2">
-                                    {company.otherJobs.map((item) => (
+                                    {post.otherJobs.map((item) => (
                                         <p
                                             key={item}
                                             className="flex items-center justify-center px-6 py-2 font-semibold text-white uppercase bg-indigo-500 rounded-xl"
@@ -176,36 +179,33 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                                 </h2>
 
                                 <div className="space-y-10">
-                                    {company.reviews.featured.map((review) => (
-                                        <div key={review.id} className="flex flex-col sm:flex-row">
-                                            <div className="order-2 mt-6 sm:ml-16 sm:mt-0">
-                                                <h3 className="text-sm font-medium text-gray-900">{review.date}</h3>
-                                                <p className="sr-only">{review.rating} out of 5 stars</p>
+                                    <h3 className="sr-only">Customer Reviews</h3>
+                                    {post.ratings.map((rating, index) => (
+                                        <div key={rating.id} className="flex space-x-4 text-sm text-gray-500">
+                                            <div className="flex-none py-10">
+                                                <img src={rating.avatar} alt="" className="w-10 h-10 bg-gray-100 rounded-full" />
+                                            </div>
+                                            <div className={classNames(index === 0 ? '' : 'border-t border-gray-200', 'py-10')}>
+                                                <h3 className="font-medium text-gray-900">{rating.name}</h3>
+
+                                                <div className="flex items-center mt-4">
+                                                    {[0, 1, 2, 3, 4].map((rt) => (
+                                                        <StarIcon
+                                                            key={rt}
+                                                            className={classNames(
+                                                                rating.rating > rt ? 'text-yellow-400' : 'text-gray-300',
+                                                                'h-5 w-5 flex-shrink-0'
+                                                            )}
+                                                            aria-hidden="true"
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <p className="sr-only">{rating.rating} out of 5 stars</p>
 
                                                 <div
-                                                    className="mt-3 space-y-6 text-sm text-gray-600"
-                                                    dangerouslySetInnerHTML={{ __html: review.content }}
+                                                    className="mt-4 prose-sm prose text-gray-500 max-w-none"
+                                                    dangerouslySetInnerHTML={{ __html: rating.comment }}
                                                 />
-                                            </div>
-
-                                            <div className="flex items-center order-1 sm:flex-col sm:items-start">
-                                                <img src={review.avatarSrc} alt={`${review.author}.`} className="w-12 h-12 rounded-full" />
-
-                                                <div className="ml-4 sm:ml-0 sm:mt-4">
-                                                    <p className="text-sm font-medium text-gray-900">{review.author}</p>
-                                                    <div className="flex items-center mt-2">
-                                                        {[0, 1, 2, 3, 4].map((rating) => (
-                                                            <StarIcon
-                                                                key={rating}
-                                                                className={classNames(
-                                                                    review.rating > rating ? 'text-gray-900' : 'text-gray-200',
-                                                                    'h-5 w-5 flex-shrink-0'
-                                                                )}
-                                                                aria-hidden="true"
-                                                            />
-                                                        ))}
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     ))}
@@ -213,29 +213,28 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                             </section>
                         </div>
                         <div className="flex items-center justify-between w-full col-span-1 col-start-3 row-start-1 p-3 mb-2 bg-gray-100 rounded-2xl">
-                            <h2 className="text-xl font-semibold text-indigo-500">{company.hireJob}</h2>
+                            <h2 className="text-xl font-semibold text-indigo-500">{post.hireJob}</h2>
                             <div className="flex items-center">
                                 <div className="flex items-center">
                                     {[0, 1, 2, 3, 4].map((rating) => (
                                         <StarIcon
                                             key={rating}
                                             className={classNames(
-                                                company.reviews.average > rating ? 'text-yellow-400' : 'text-gray-200',
+                                                averageRating > rating ? 'text-yellow-400' : 'text-gray-200',
                                                 'h-5 w-5 flex-shrink-0'
                                             )}
                                             aria-hidden="true"
                                         />
                                     ))}
                                 </div>
-                                <p className="sr-only">{company.reviews.average} out of 5 stars</p>
-                                <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">{company.reviews.totalCount} reviews</p>
+                                <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">{post.ratings.length} reviews</p>
                             </div>
                         </div>
                         <div className="flex flex-col items-center w-full h-full col-span-1 col-start-3 row-start-2">
                             <Tab.Group>
                                 <div className="p-3 bg-indigo-500 rounded-xl">
                                     <Tab.List className="flex w-full p-1 space-x-1 bg-gray-200 rounded-xl">
-                                        {company.requires.map((item) => (
+                                        {post.requires.map((item) => (
                                             <Tab
                                                 key={item.name}
                                                 className={({ selected }) =>
@@ -250,7 +249,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                                         ))}
                                     </Tab.List>
                                     <Tab.Panels className="w-full mt-2">
-                                        {company.requires.map((item, idx) => (
+                                        {post.requires.map((item, idx) => (
                                             <Tab.Panel
                                                 key={idx}
                                                 className={classNames(
@@ -258,13 +257,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ company }) => {
                                                     'ring-white ring-opacity-60 focus:outline-none focus:ring-2'
                                                 )}
                                             >
-                                                <ul className="list-disc list-inside">
-                                                    {item.details.map((detail) => (
-                                                        <li key={detail} className="relative p-3 rounded-md hover:bg-gray-100">
-                                                            {detail}
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                                <span dangerouslySetInnerHTML={{ __html: item.details }} />
                                             </Tab.Panel>
                                         ))}
                                     </Tab.Panels>
