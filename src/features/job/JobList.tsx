@@ -164,6 +164,7 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                             {posts.map((post) => (
                                 <JobCard
                                     key={post.id}
+                                    name={post.name}
                                     id={post.id}
                                     company={post.name}
                                     companyLogo="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"

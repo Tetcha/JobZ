@@ -4,7 +4,7 @@ import { OptionalSelect, PostAddDTO, selectStatus, selectTag, selectTitle, selec
 import axios from 'axios';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
-import { Controller, useFieldArray,useForm } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import Select from 'react-select';
 
 // import ReactQuill from 'react-quill';
@@ -51,8 +51,8 @@ const PostRecruit: React.FunctionComponent<PostRecruitProps> = () => {
         data.updateAt = new Date().toLocaleDateString();
         data.jobDetail.expired = new Date(data.jobDetail.expired).toLocaleDateString();
         data.requires = [
-            { name: 'Chi tiết công việc', details: require1 },
-            { name: 'Yêu cầu công việc', details: require2 },
+            { name: 'Chi tiết', details: require1 },
+            { name: 'Yêu cầu', details: require2 },
             { name: 'Quyền lợi', details: require3 },
         ];
 
@@ -270,14 +270,14 @@ const PostRecruit: React.FunctionComponent<PostRecruitProps> = () => {
                         <div className="grid justify-between w-full grid-cols-12 gap-6 mb-16 col-span-full">
                             <div className="col-span-4">
                                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Chi tiết công việc
+                                    Chi tiết
                                 </label>
 
                                 <ReactQuill className="h-36" theme="snow" value={require1} onChange={setRequire1} />
                             </div>
                             <div className="col-span-4">
                                 <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Yếu cầu công việc
+                                    Yếu cầu
                                 </label>
 
                                 <ReactQuill className="h-36" theme="snow" value={require2} onChange={setRequire2} />
@@ -292,7 +292,7 @@ const PostRecruit: React.FunctionComponent<PostRecruitProps> = () => {
                         </div>
                         <div className="row-span-4 mb-10 col-span-full">
                             <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Mô tả công việc
+                                Mô tả
                             </label>
 
                             <ReactQuill className="h-36" theme="snow" value={descriptions} onChange={setDescriptions} />
