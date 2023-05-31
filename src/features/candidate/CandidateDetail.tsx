@@ -5,12 +5,12 @@ interface CandidateDetailProps {}
 const CandidateDetail: React.FunctionComponent<CandidateDetailProps> = () => {
     return (
         <>
-            <div className="flex flex-col justify-center items-center w-full">
-                <div className="flex items-start w-full max-w-screen-lg gap-4 h-auto p-10 my-5 ">
+            <div className="flex flex-col items-center justify-center w-full">
+                <div className="flex items-start w-full h-auto max-w-screen-lg gap-4 p-10 my-5 ">
                     <div className="h-full w-60">
-                        <img src="/images/avatars/creator_2.jpg" alt="" className="w-full w-full" />
+                        <img src="/images/avatars/creator_2.jpg" alt="" className="w-full" />
                     </div>
-                    <div className="w-full max-w-xl h-auto flex flex-col gap-10">
+                    <div className="flex flex-col w-full h-auto max-w-xl gap-10">
                         <div>
                             <h1 className="text-3xl font-bold">Nguyễn Văn Hải</h1>
                             <p className="text-base">Front-end Developer</p>
@@ -25,8 +25,8 @@ const CandidateDetail: React.FunctionComponent<CandidateDetailProps> = () => {
                                 công việc.
                             </p>
                         </div>
-                        <div className="h-full w-full">
-                            <img src="/images/cv.jpg" alt="" className="h-full w-full" />
+                        <div className="w-full h-full">
+                            <img src="/images/cv.jpg" alt="" className="w-full h-full" />
                         </div>
                     </div>
                     <button className="w-[250px] px-4 py-2 font-semibold text-white bg-indigo-700 cursor-pointer rounded-lg text-sm">

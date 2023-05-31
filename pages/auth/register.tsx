@@ -1,7 +1,7 @@
+import AuthRegister from '@features/auth/AuthRegister';
 import * as React from 'react';
 
 import { CommonSeo } from '../../src/core/components';
-import AuthRegister from '@features/auth/AuthRegister';
 
 interface RegisterPageProps {}
 

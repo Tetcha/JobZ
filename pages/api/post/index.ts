@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@root/prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // const body = JSON.parse(req.body);
@@ -23,6 +23,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         try {
             const data = await prisma.post.create({
                 data: {
+                    userId: req.body.userId,
                     descriptions: req.body.descriptions,
                     hireJob: req.body.hireJob,
                     name: req.body.name,

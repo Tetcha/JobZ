@@ -1,10 +1,9 @@
-import _get from 'lodash.get';
-import { NextPage } from 'next';
-import * as React from 'react';
-
 import { Disclosure } from '@headlessui/react';
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
+import _get from 'lodash.get';
+import { NextPage } from 'next';
 import Link from 'next/link';
+import * as React from 'react';
 
 const faqs = [
     {

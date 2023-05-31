@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import 'swiper/css';
+import 'react-quill/dist/quill.snow.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -9,13 +10,13 @@ import { ThemeProvider } from 'next-themes';
 import { ToastContainer } from 'react-toastify';
 
 import { DynamicLayout, ProgressLoadingBar } from '../src/core/components';
-import 'react-quill/dist/quill.snow.css';
 
 const queryClient = new QueryClient({});
 
 import 'react-toastify/dist/ReactToastify.css';
-import { ToggleProvider } from 'react-toggle-hook';
+
 import { UserProviderContext } from '@context/UserContext';
+import { ToggleProvider } from 'react-toggle-hook';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

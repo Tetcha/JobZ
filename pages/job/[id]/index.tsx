@@ -1,14 +1,12 @@
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import * as React from 'react';
-
+import { config } from '@core/config';
 import JobDetail from '@features/job/JobDetail';
-
 import { Post } from '@models/company';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { config } from '@core/config';
 import get from 'lodash.get';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import * as React from 'react';
 
 interface JobDetailPageProps {
     post: Post;

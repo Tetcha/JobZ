@@ -1,34 +1,44 @@
+import { useUserContext } from '@context/UserContext';
+import { config } from '@core/config';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import * as React from 'react';
-import { useToggleContext } from 'react-toggle-hook';
-import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import { useRouter } from 'next/router';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { useToggleContext } from 'react-toggle-hook';
 
-interface ApplyJobModalProps {}
+interface ApplyJobModalProps {
+    postId: string;
+}
 
 interface ApplyJobDTO {
-    name: string;
-    email: string;
     phone: string;
-    jobId: string;
     note: string;
 }
 
-const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = () => {
+const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = ({ postId }) => {
     const { close, isOpen, value } = useToggleContext<string>('apply-job');
     const { register, handleSubmit } = useForm<ApplyJobDTO>();
     const router = useRouter();
+    const { user } = useUserContext();
 
-    const onSubmit = (data: ApplyJobDTO) => {
-        console.log(data);
-        router.push('/applied-jobs/1');
-        close();
+    const onSubmit = async (data: ApplyJobDTO) => {
+        await axios
+            .post(`${config.SERVER_URL}/applied/recruit`, { ...data, userId: user.id, postId: postId })
+            .then((res) => {
+                if (res.data) {
+                    router.push(`/applied-jobs/${res.data.id}`);
+                }
+            })
+            .finally(() => {
+                close();
+            });
     };
 
     return (
         <>
             {isOpen && (
-                <div className="fixed top-0 left-0 z-10 flex flex-col items-center justify-center w-full h-full bg-gray-900/50 min-h-screen">
+                <div className="fixed top-0 left-0 z-10 flex flex-col items-center justify-center w-full h-full min-h-screen bg-gray-900/50">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="relative grid w-full max-w-2xl grid-cols-1 p-4 bg-white rounded gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2"
@@ -37,53 +47,8 @@ const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = () => {
                             <XMarkIcon />
                         </div>
                         <p className="text-4xl font-semibold text-gray-800 col-span-full">Gửi đơn ứng tuyển</p>
-                        <div className="col-span-3">
-                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                Tên của bạn
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    {...register('name', { required: true })}
-                                    type="text"
-                                    id="name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
 
-                        <div className="col-span-3">
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Địa chỉ Email
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    {...register('email', { required: true })}
-                                    type="email"
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="col-span-3">
-                            <label htmlFor="jobId" className="block text-sm font-medium leading-6 text-gray-900">
-                                Vị tri ứng tuyển
-                            </label>
-                            <div className="mt-2">
-                                <select
-                                    id="jobId"
-                                    {...register('jobId', { required: true })}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                                >
-                                    <option>Marketing</option>
-                                    <option>Software Engineer</option>
-                                    <option>Business Analyst</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="col-span-3">
+                        <div className="col-span-full">
                             <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">
                                 Số điện thoại
                             </label>

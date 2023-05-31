@@ -6,6 +6,7 @@ export interface Post {
     hireJob: Tag;
     updateAt: string;
     descriptions: string;
+    thumbnail: string;
     jobDetail: {
         title: Title;
         quantity: number;
@@ -147,4 +148,4 @@ export const selectTag: OptionalSelect[] = [
     },
 ];
 
-export interface PostAddDTO extends Omit<Post, 'reviews' | 'id'> {}
+export interface PostAddDTO extends Omit<Post, 'ratings' | 'id' | 'thumbnail'> {}

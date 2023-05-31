@@ -94,7 +94,7 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
             </div>
             <div className="flex justify-center w-full py-24 bg-gray-100">
                 <div className="flex flex-col items-center justify-center w-full text-gray-900 max-w-screen-app gap-9">
-                    <div className="flex items-center justify-between w-full px-4 py-2 bg-white border-gray-400 shadow-lg border-px">
+                    {/* <div className="flex items-center justify-between w-full px-4 py-2 bg-white border-gray-400 shadow-lg border-px">
                         <p className="flex flex-col w-full gap-4 ">Hiển thị 1-9 trong 54 kết quả tìm thấy</p>
                         <div className="flex justify-between w-96">
                             <div className="flex gap-2">
@@ -112,9 +112,9 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex justify-between w-full gap-7">
-                        <div className="flex flex-col items-start w-72">
+                        {/* <div className="flex flex-col items-start w-72">
                             <div className="flex flex-col gap-6 px-5 bg-white border border-gray-200 py-9">
                                 <label className="text-2xl font-semibold text-gray-900">Tìm kiếm</label>
                                 <div className="flex items-center w-full bg-gray-100">
@@ -159,7 +159,7 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                                     ))}
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="grid w-full grid-cols-3 gap-6 ">
                             {posts.map((post) => (
                                 <JobCard

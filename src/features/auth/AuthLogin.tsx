@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { useLocalStorage } from 'usehooks-ts';
 
 interface AuthLoginProps {}
 
@@ -28,13 +29,13 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
     const [role, setRole] = React.useState<string>('USER');
     const router = useRouter();
 
-    const { setUser, updateIsLogin } = useUserContext();
+    const { updateUserData: updateIsLogin, setUserId } = useUserContext();
 
     const onSubmit = (data: LoginDTO) => {
         data.role = role;
 
         axios.post(`${config.SERVER_URL}/auth/login`, data).then((res) => {
-            setUser(res.data);
+            setUserId(res.data.id);
             updateIsLogin();
             router.push('/');
         });

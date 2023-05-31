@@ -1,13 +1,14 @@
+import ApplyJobModal from '@components/modals/ApplyJobModal';
+import { useUserContext } from '@context/UserContext';
 import { Tab } from '@headlessui/react';
 import { StarIcon } from '@heroicons/react/20/solid';
 import { Post } from '@models/company';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
+import { useToggleContext } from 'react-toggle-hook';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useToggleContext } from 'react-toggle-hook';
-import ApplyJobModal from '@components/modals/ApplyJobModal';
 
 interface JobDetailProps {
     post: Post;
@@ -31,6 +32,8 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
             setAverageRating(sum / post.ratings.length);
         }
     }, [post]);
+
+    const { user } = useUserContext();
 
     return (
         <>
@@ -85,12 +88,14 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
                             <div className="flex flex-col w-full gap-2">
                                 <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{post.name}</h1>
                             </div>
-                            <button
-                                onClick={() => open('')}
-                                className="flex items-center justify-center flex-shrink-0 px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Ứng tuyển ngay
-                            </button>
+                            {Boolean(user.name && user.role === 'USER') && (
+                                <button
+                                    onClick={() => open('')}
+                                    className="flex items-center justify-center flex-shrink-0 px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                >
+                                    Ứng tuyển ngay
+                                </button>
+                            )}
                         </div>
 
                         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
@@ -179,7 +184,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
                                 </h2>
 
                                 <div className="space-y-10">
-                                    <h3 className="sr-only">Customer Reviews</h3>
+                                    <h3 className="sr-only">Employee Reviews</h3>
                                     {post.ratings.map((rating, index) => (
                                         <div key={rating.id} className="flex space-x-4 text-sm text-gray-500">
                                             <div className="flex-none py-10">
@@ -268,7 +273,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
                 </main>
             </div>
 
-            <ApplyJobModal />
+            <ApplyJobModal postId={post.id} />
         </>
     );
 };

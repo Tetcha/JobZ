@@ -1,4 +1,7 @@
+import { config } from '@core/config';
 import { User } from '@models/user';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import * as React from 'react';
 // @ts-ignore
 import { useLocalStorage } from 'usehooks-ts';
@@ -7,7 +10,8 @@ export interface UserProps {
     user: User;
     isLogin: boolean;
     setUser: (user: User) => void;
-    updateIsLogin: () => void;
+    setUserId: (userId: string) => void;
+    updateUserData: () => void;
     handleReset: () => void;
 }
 
@@ -18,11 +22,23 @@ const defaultValues: UserProps = {
         name: '',
         password: '',
         role: 'USER',
+        applied: [],
+        posts: [],
+        profile: {
+            avatar: '',
+            cv: '',
+            id: '',
+            intro: '',
+            skills: [],
+            title: '',
+            userId: '',
+        },
     },
     isLogin: false,
     setUser: () => {},
-    updateIsLogin: () => {},
+    updateUserData: () => {},
     handleReset: () => {},
+    setUserId: () => {},
 };
 
 export const UserContext = React.createContext<UserProps>(defaultValues);
@@ -30,7 +46,9 @@ export const UserContext = React.createContext<UserProps>(defaultValues);
 interface LoadingProviderProps extends React.PropsWithChildren {}
 
 export const UserProviderContext: React.FC<LoadingProviderProps> = ({ children }) => {
-    const [user, setUser] = useLocalStorage('user', defaultValues.user);
+    // const [user, setUser] = useLocalStorage('user', defaultValues.user);
+    const [user, setUser] = React.useState<User>(defaultValues.user);
+    const [userId, setUserId] = useLocalStorage('userId', '');
     const [isLogin, setIsLogin] = React.useState<boolean>(defaultValues.isLogin);
 
     React.useEffect(() => {
@@ -46,21 +64,42 @@ export const UserProviderContext: React.FC<LoadingProviderProps> = ({ children }
         }
     }, []);
 
-    const updateIsLogin = () => {
-        const user = JSON.parse(localStorage.getItem('user') as string) as User;
-        if (Boolean(user.id)) {
+    const { data, isSuccess, refetch } = useQuery<User>(
+        ['user', userId],
+        async () => {
+            const res = await axios.get(`${config.SERVER_URL}/user/${userId}`);
+            return res.data;
+        },
+        {
+            enabled: Boolean(userId),
+            initialData: user,
+        }
+    );
+
+    React.useEffect(() => {
+        if (isSuccess) {
+            console.log("Fetching user's data");
+            setUser(data as User);
             setIsLogin(true);
         } else {
+            setUser(defaultValues.user);
             setIsLogin(false);
         }
+    }, [isSuccess, data]);
+
+    console.log('User: ', user);
+
+    const updateUserData = () => {
+        refetch();
     };
 
     const handleReset = () => {
         setUser(defaultValues.user);
+        setUserId('');
         setIsLogin(false);
     };
 
-    return <UserContext.Provider value={{ isLogin, user, setUser, updateIsLogin, handleReset }}>{children}</UserContext.Provider>;
+    return <UserContext.Provider value={{ isLogin, user, setUser, handleReset, updateUserData, setUserId }}>{children}</UserContext.Provider>;
 };
 
 export function useUserContext() {

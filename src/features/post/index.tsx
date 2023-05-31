@@ -1,10 +1,11 @@
-import { PostAddDTO, OptionalSelect, selectStatus, selectTag, selectTitle, selectTypeWorking } from '@models/company';
-import * as React from 'react';
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import Select from 'react-select';
-import dynamic from 'next/dynamic';
-import axios from 'axios';
+import { useUserContext } from '@context/UserContext';
 import { config } from '@core/config';
+import { OptionalSelect, PostAddDTO, selectStatus, selectTag, selectTitle, selectTypeWorking } from '@models/company';
+import axios from 'axios';
+import dynamic from 'next/dynamic';
+import * as React from 'react';
+import { Controller, useFieldArray,useForm } from 'react-hook-form';
+import Select from 'react-select';
 
 // import ReactQuill from 'react-quill';
 
@@ -43,6 +44,8 @@ const PostRecruit: React.FunctionComponent<PostRecruitProps> = () => {
     const [require2, setRequire2] = React.useState<string>('');
     const [require3, setRequire3] = React.useState<string>('');
 
+    const { user } = useUserContext();
+
     const handleOnSubmit = (data: PostAddDTO) => {
         data.descriptions = descriptions;
         data.updateAt = new Date().toLocaleDateString();
@@ -53,7 +56,7 @@ const PostRecruit: React.FunctionComponent<PostRecruitProps> = () => {
             { name: 'Quyền lợi', details: require3 },
         ];
 
-        axios.post(`${config.SERVER_URL}/post`, data).then((res) => {
+        axios.post(`${config.SERVER_URL}/post`, { ...data, userId: user.id }).then((res) => {
             console.log(res);
         });
     };
