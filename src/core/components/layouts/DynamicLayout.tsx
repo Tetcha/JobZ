@@ -17,7 +17,7 @@ export const DynamicLayout: React.FC<DynamicLayoutProps> = ({ children }) => {
     }
 
     return (
-        <div className="flex flex-col justify-start h-full min-h-screen">
+        <div className="flex flex-col justify-between h-full min-h-screen">
             <MainNavbar />
             <div className="mb-10">{children}</div>
             {/* <MainSideBar /> */}

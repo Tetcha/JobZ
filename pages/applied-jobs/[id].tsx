@@ -1,10 +1,11 @@
-import SelectInterviewDate from '@components/modals/SelectInterviewModal';
+import SelectInterviewDate, { IOpenModalSelectInterview } from '@components/modals/SelectInterviewModal';
+import ViewBookingDetailModal from '@components/modals/ViewBookingDetailModal';
 import { useUserContext } from '@context/UserContext';
 import { config } from '@core/config';
 import { CheckIcon } from '@heroicons/react/20/solid';
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { VideoCameraIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Applied } from '@models/applied';
-import { Status } from '@prisma/client';
+import { Booking, Status } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
@@ -26,7 +27,7 @@ function classNames(...classes: string[]) {
 }
 
 const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> = () => {
-    const { open } = useToggleContext<string>('select-interview-date', {
+    const { open } = useToggleContext<IOpenModalSelectInterview>('select-interview-date', {
         // extraOpenAction is called after close action
         extraCloseAction: () => {},
     });
@@ -46,7 +47,7 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
     const { data, refetch } = useQuery<Applied>(
         ['applied-job-detail', id],
         async () => {
-            const res = await axios.get(`${config.SERVER_URL}/applied/recruit/${id}`);
+            const res = await axios.get(`/api/applied/recruit/${id}`);
             return res.data;
         },
         {
@@ -68,6 +69,14 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
         }
     );
 
+    const checkStatus = (idxStage: number) => {
+        if (idxStage <= data.stage) {
+            return Status.COMPLETE;
+        }
+
+        return data.status;
+    };
+
     const steps: Step[] = [
         {
             name: 'Tạo hồ sơ ứng tuyển',
@@ -79,34 +88,38 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
             name: 'Nộp hồ sơ',
             description: `Hồ sơ của ${user.role === 'BUSINESS' ? 'ứng viên' : 'bạn'} sẽ được gửi đến nhà tuyển dụng`,
             action: () => {},
-            status: data.status === 'REJECT' ? Status.REJECT : data.stage > 1 ? Status.COMPLETE : Status.INCOMING,
+            status: checkStatus(2),
         },
         {
             name: 'Doanh nghiệp đã nhận',
             description: `Hồ sơ của ${user.role === 'BUSINESS' ? 'ứng viên' : 'bạn'} đã được doanh nghiệp tiếp nhận`,
             action: () => {},
-            status: data.status === 'REJECT' ? Status.REJECT : data.stage > 2 ? Status.COMPLETE : Status.INCOMING,
+            status: checkStatus(3),
         },
         {
             name: 'Đồng ý phỏng vấn',
             description: `Doanh nghiệp đã đồng ý phỏng vấn, hãy liên hệ với ${user.role === 'BUSINESS' ? 'ứng viên' : 'nhà tuyển dụng'} để phỏng vấn`,
             action: () => {},
-            status: data.status === 'REJECT' ? Status.REJECT : data.stage > 3 ? Status.COMPLETE : Status.INCOMING,
+            status: checkStatus(4),
         },
         {
             name: 'Đồng ý nhận làm việc',
             description: `Chúc mừng ${user.role === 'BUSINESS' ? 'ứng viên' : 'bạn'} đã ứng tuyển thành công`,
             action: () => {},
-            status: data.status === 'REJECT' ? Status.REJECT : data.stage > 4 ? Status.COMPLETE : Status.INCOMING,
+            status: checkStatus(5),
         },
     ];
 
     const handleAccept = () => {
+        if (data.stage === 3) {
+            open({ appliedId: data.id });
+            return;
+        }
         axios
-            .put(`${config.SERVER_URL}/applied/recruit`, {
+            .put(`/api/applied/recruit`, {
                 id: data.id,
                 stage: data.stage + 1,
-                status: Status.INCOMING,
+                status: data.stage + 1 <= 4 ? Status.INCOMING : Status.COMPLETE,
             })
             .then((res) => {
                 refetch();
@@ -115,15 +128,17 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
 
     const handleReject = () => {
         axios
-            .put(`${config.SERVER_URL}/applied/recruit`, {
+            .put(`/api/applied/recruit`, {
                 id: data.id,
-                stage: data.stage + 1,
+                stage: data.stage,
                 status: Status.REJECT,
             })
             .then((res) => {
                 refetch();
             });
     };
+
+    const { open: openViewBookingDetail } = useToggleContext<Booking>('view-booking-detail');
 
     const handleStep = (status: Status, step: Step, stepIdx: number) => {
         console.log(status);
@@ -144,6 +159,16 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
                                 <span className="text-sm font-medium">{step.name}</span>
                                 <span className="text-sm text-gray-500">{step.description}</span>
                             </span>
+                            {stepIdx === 3 && data.status === Status.INCOMING && (
+                                <div className="absolute top-0 right-0 flex items-center justify-center h-10 gap-2 ">
+                                    <div
+                                        className="w-8 cursor-pointer h-8 p-2 text-white bg-yellow-500 border  border-solid rounded-full"
+                                        onClick={() => openViewBookingDetail(booking)}
+                                    >
+                                        <VideoCameraIcon />
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </>
                 );
@@ -188,11 +213,11 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
                 return (
                     <>
                         {stepIdx !== steps.length - 1 ? (
-                            <div className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-indigo-600" aria-hidden="true" />
+                            <div className="absolute left-4 top-4 -ml-px mt-0.5 h-full w-0.5 bg-red-600" aria-hidden="true" />
                         ) : null}
                         <div className="relative flex items-start group">
                             <span className="flex items-center h-9">
-                                <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-red-600 rounded-full group-hover:bg-indigo-800">
+                                <span className="relative z-10 flex items-center justify-center w-8 h-8 bg-red-600 rounded-full group-hover:bg-red-800">
                                     <XMarkIcon className="w-5 h-5 text-white" aria-hidden="true" />
                                 </span>
                             </span>
@@ -225,6 +250,23 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
         }
     };
 
+    const { data: booking } = useQuery<Booking>(
+        ['booking', id],
+        async () => {
+            const res = await axios.get(`/api/booking/${id}`);
+            return res.data;
+        },
+        {
+            enabled: Boolean(id),
+            initialData: {
+                appliedId: '',
+                time: 0,
+                note: '',
+                linkMeeting: '',
+            } as Booking,
+        }
+    );
+
     return (
         <>
             <div className="flex flex-col">
@@ -253,11 +295,7 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
                             <div className="flex items-center justify-start w-full mt-2">
                                 <div className="flex items-center justify-center w-full max-w-md overflow-hidden rounded-lg shadow-lg h-72">
                                     {data.post.thumbnail ? (
-                                        <img
-                                            src="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
-                                            className="object-cover w-full h-full"
-                                            alt=""
-                                        />
+                                        <img src={data.post.thumbnail} className="object-cover w-full h-full" alt="" />
                                     ) : (
                                         <p>Chưa có ảnh</p>
                                     )}
@@ -278,6 +316,8 @@ const AppliedJobDetailPage: React.FunctionComponent<AppliedJobDetailPageProps> =
                     </div>
                 </div>
             </div>
+            <ViewBookingDetailModal />
+            <SelectInterviewDate />
         </>
     );
 };

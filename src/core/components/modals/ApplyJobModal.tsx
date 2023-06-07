@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useToggleContext } from 'react-toggle-hook';
 
 interface ApplyJobModalProps {
@@ -17,14 +18,14 @@ interface ApplyJobDTO {
 }
 
 const ApplyJobModal: React.FunctionComponent<ApplyJobModalProps> = ({ postId }) => {
-    const { close, isOpen, value } = useToggleContext<string>('apply-job');
+    const { close, isOpen } = useToggleContext<string>('apply-job');
     const { register, handleSubmit } = useForm<ApplyJobDTO>();
     const router = useRouter();
     const { user } = useUserContext();
 
     const onSubmit = async (data: ApplyJobDTO) => {
         await axios
-            .post(`${config.SERVER_URL}/applied/recruit`, { ...data, userId: user.id, postId: postId })
+            .post(`/api/applied/recruit`, { ...data, userId: user.id, postId: postId })
             .then((res) => {
                 if (res.data) {
                     router.push(`/applied-jobs/${res.data.id}`);

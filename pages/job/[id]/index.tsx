@@ -18,7 +18,7 @@ const JobDetailPage: NextPage<JobDetailPageProps> = ({ post }) => {
 
 JobDetailPage.getInitialProps = async (ctx) => {
     const id = get(ctx, 'query.id', '');
-    const res = await axios.get(`${config.SERVER_URL}/post/${id}`);
+    const res = await axios.get(`/api/post/${id}`);
     const post = res.data;
     return { post };
 };

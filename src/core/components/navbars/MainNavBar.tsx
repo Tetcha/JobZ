@@ -1,5 +1,7 @@
 import { useUserContext } from '@context/UserContext';
+import { config } from '@core/config';
 import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -55,6 +57,33 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
         router.push('/auth/login');
     };
 
+    const onClickUserSubscription = async () => {
+        const resSubscription = await axios.get(`/api/subscription?userRole=${user.role}`);
+
+        const redirectUrl = window.location.origin + `/subscription?userId=${user.id}&id=${resSubscription.data.id}`;
+
+        console.log(config);
+
+        const res = await axios.post(
+            config.NEXT_PUBLIC_API_MOMO,
+            {
+                redirectUrl,
+                amount: resSubscription.data.price,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${config.NEXT_PUBLIC_TOKEN_MOMO}`,
+                },
+            }
+        );
+
+        if (!res.data.paymentUrl) {
+            return;
+        }
+
+        window.location.href = res.data.paymentUrl;
+    };
+
     return (
         <>
             {/* main desktop menu sart*/}
@@ -86,6 +115,10 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                         {isLogin ? (
                             <>
                                 <div className="flex items-center gap-2">
+                                    {Boolean(user.userSubscription.price) && (
+                                        <div className="px-3 py-1 font-semibold text-white bg-yellow-400 rounded-full">Premium</div>
+                                    )}
+
                                     <p className="text-base font-medium text-gray-800">{user.name}</p>
                                     <div className="overflow-hidden rounded-full h-14 w-14">
                                         <img src={'https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg'} alt="avatar" />
@@ -104,10 +137,14 @@ const MainNavbar: React.FunctionComponent<MainNavbarProps> = () => {
                                                     <button className="w-full py-2 duration-300 hover:bg-indigo-400">Hồ sơ</button>
                                                 </Link>
                                             )}
-
-                                            <Link href={'/momo'}>
-                                                <button className="w-full py-2 duration-300 hover:bg-indigo-400">Nạp tiền</button>
-                                            </Link>
+                                            {!Boolean(user.userSubscription.price) && (
+                                                <button
+                                                    className="w-full py-2 duration-300 hover:bg-indigo-400"
+                                                    onClick={() => onClickUserSubscription()}
+                                                >
+                                                    Nâng cấp tài khoản
+                                                </button>
+                                            )}
 
                                             <button className="w-full py-2 duration-300 hover:bg-indigo-400" onClick={() => handleLogout()}>
                                                 Đăng xuất

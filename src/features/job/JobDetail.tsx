@@ -6,6 +6,7 @@ import { Post } from '@models/company';
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
+import { toast } from 'react-toastify';
 import { useToggleContext } from 'react-toggle-hook';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -34,6 +35,15 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
     }, [post]);
 
     const { user } = useUserContext();
+
+    const openModal = () => {
+        if (!Boolean(user.userSubscription.price)) {
+            toast.warning('Hãy nâng cấp gói premium để tham gia ứng tuyển nhé');
+            return;
+        }
+
+        open('');
+    };
 
     return (
         <>
@@ -90,7 +100,7 @@ const JobDetail: React.FC<JobDetailProps> = ({ post }) => {
                             </div>
                             {Boolean(user.name && user.role === 'USER') && (
                                 <button
-                                    onClick={() => open('')}
+                                    onClick={() => openModal()}
                                     className="flex items-center justify-center flex-shrink-0 px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 >
                                     Ứng tuyển ngay

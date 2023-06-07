@@ -1,4 +1,5 @@
 import prisma from '@root/prisma/client';
+import moment from 'moment';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -14,6 +15,28 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     profile: true,
                 },
             });
+
+            const subscription = await prisma.subscription.findFirst({
+                where: {
+                    userRole: data.role,
+                    price: 0,
+                },
+            });
+
+            if (subscription) {
+                await prisma.userSubscription.create({
+                    data: {
+                        userId: data.id,
+                        name: subscription.name,
+                        bookings: subscription.bookings,
+                        posts: subscription.posts,
+                        price: subscription.price,
+                        startDate: moment().unix(),
+                        endDate: moment().add(10, 'year').unix(),
+                        view: subscription.view,
+                    },
+                });
+            }
 
             await prisma.profile.create({
                 data: {

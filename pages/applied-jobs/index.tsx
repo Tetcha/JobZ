@@ -9,61 +9,6 @@ import * as React from 'react';
 
 interface AppliedJobsPageProps {}
 
-const people = [
-    {
-        name: 'Leslie Alexander',
-        email: 'leslie.alexander@example.com',
-        role: 'Co-Founder / CEO',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: '3h ago',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Michael Foster',
-        email: 'michael.foster@example.com',
-        role: 'Co-Founder / CTO',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: '3h ago',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Dries Vincent',
-        email: 'dries.vincent@example.com',
-        role: 'Business Relations',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: null,
-    },
-    {
-        name: 'Lindsay Walton',
-        email: 'lindsay.walton@example.com',
-        role: 'Front-end Developer',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: '3h ago',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Courtney Henry',
-        email: 'courtney.henry@example.com',
-        role: 'Designer',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: '3h ago',
-        lastSeenDateTime: '2023-01-23T13:23Z',
-    },
-    {
-        name: 'Tom Cook',
-        email: 'tom.cook@example.com',
-        role: 'Director of Product',
-        imageUrl: 'https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png',
-        href: '#',
-        lastSeen: null,
-    },
-];
-
 const AppliedJobsPage: React.FunctionComponent<AppliedJobsPageProps> = () => {
     const { user, updateUserData } = useUserContext();
 

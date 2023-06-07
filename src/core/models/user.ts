@@ -1,4 +1,4 @@
-import { Applied as IApplied,Post as IPost, Profile } from '@prisma/client';
+import { Applied as IApplied, Post as IPost, Profile } from '@prisma/client';
 
 export interface User {
     id: string;
@@ -9,6 +9,20 @@ export interface User {
     posts: Post[];
     applied: Applied[];
     profile: Profile;
+    userSubscription: UserSubscription;
+}
+
+interface UserSubscription {
+    bookings: number;
+    endDate: number;
+    id: string;
+    name: string;
+    posts: number;
+    price: number;
+    startDate: number;
+    userId: string;
+    userRole: 'BUSINESS' | 'USER';
+    view: number;
 }
 
 interface Post extends IPost {

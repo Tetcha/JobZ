@@ -148,4 +148,4 @@ export const selectTag: OptionalSelect[] = [
     },
 ];
 
-export interface PostAddDTO extends Omit<Post, 'ratings' | 'id' | 'thumbnail'> {}
+export interface PostAddDTO extends Omit<Post, 'ratings' | 'id'> {}

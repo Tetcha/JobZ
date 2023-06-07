@@ -18,6 +18,34 @@ model User {
   posts    Post[] @relation("UserToPost")
   profile  Profile? @relation("ProfileToUser") 
   applied  Applied[] @relation("AppliedToUser")
+  userSubscription UserSubscription? @relation("UserToUserSubscription")
+}
+
+model UserSubscription  {
+  id        String   @id @default(uuid())
+  user      User     @relation("UserToUserSubscription",fields: [userId], references: [id])
+  userId    String @unique
+
+  startDate Int     @default(0)
+  endDate  Int    @default(0)
+
+  name String
+  userRole Role     @default(USER)
+  price     Int     @default(0)
+  bookings  Int    @default(0)
+  posts     Int   @default(0)
+  view Int @default(0)
+}
+
+model Subscription {
+  id        String   @id @default(uuid())
+
+  name String
+  view Int @default(0)
+  userRole Role     @default(USER)
+  price     Int     @default(0)
+  bookings  Int    @default(0)
+  posts     Int   @default(0)
 }
 
 enum Role {
@@ -94,10 +122,23 @@ model Applied {
   postId String
   user User @relation("AppliedToUser",fields: [userId], references: [id])
   userId String
+
   status Status @default(INCOMING)
   stage Int @default(0)
   phone String @default("")
   note String @default("")
+
+  booking Booking? @relation("AppliedToBooking")
+}
+
+model Booking {
+  id String @id @default(uuid())
+  time Int 
+  linkMeeting String
+  note String @default("")
+  applied Applied @relation("AppliedToBooking",fields: [appliedId], references: [id])
+  appliedId String   @unique
+
 }
 
 enum Status {

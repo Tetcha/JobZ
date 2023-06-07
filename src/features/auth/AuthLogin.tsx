@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface AuthLoginProps {}
@@ -34,11 +35,16 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
     const onSubmit = (data: LoginDTO) => {
         data.role = role;
 
-        axios.post(`${config.SERVER_URL}/auth/login`, data).then((res) => {
-            setUserId(res.data.id);
-            updateIsLogin();
-            router.push('/');
-        });
+        axios
+            .post(`/api/auth/login`, data)
+            .then((res) => {
+                setUserId(res.data.id);
+                updateIsLogin();
+                router.push('/');
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message);
+            });
     };
 
     return (
@@ -58,19 +64,19 @@ const AuthLogin: React.FunctionComponent<AuthLoginProps> = () => {
                             <input
                                 {...register('email')}
                                 type="email"
-                                className="w-full border-2 border-black border-solid rounded-lg"
+                                className="w-full border-2 border-black text-gray-900 border-solid rounded-lg"
                                 placeholder="Email"
                             />
                             <input
                                 {...register('password')}
                                 type="password"
-                                className="w-full border-2 border-black border-solid rounded-lg"
+                                className="w-full border-2 border-black text-gray-900 border-solid rounded-lg"
                                 placeholder="Mật khẩu"
                             />
                             <button
                                 type="submit"
                                 onClick={() => setRole('USER')}
-                                className="w-full px-4 py-2 font-semibold text-white bg-indigo-700 rounded-lg cursor-pointer"
+                                className="w-full px-4 py-2 font-semibold text-white  bg-indigo-700 rounded-lg cursor-pointer"
                             >
                                 Đăng nhập
                             </button>

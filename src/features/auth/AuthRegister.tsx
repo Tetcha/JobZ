@@ -32,7 +32,7 @@ const AuthRegister: React.FunctionComponent<AuthLoginProps> = () => {
     const onSubmit = (data: RegisterDTO) => {
         data.role = role;
 
-        axios.post(`${config.SERVER_URL}/auth/register`, data).then((res) => {
+        axios.post(`/api/auth/register`, data).then((res) => {
             router.push('/auth/login');
         });
         // fetch('http://localhost:3000/api/auth/register', {
@@ -60,19 +60,19 @@ const AuthRegister: React.FunctionComponent<AuthLoginProps> = () => {
                             <input
                                 {...register('name')}
                                 type="text"
-                                className="w-full border-2 border-black border-solid rounded-lg"
+                                className="w-full border-2 border-black text-gray-900 border-solid rounded-lg"
                                 placeholder="Tên của bạn"
                             />
                             <input
                                 {...register('email')}
                                 type="email"
-                                className="w-full border-2 border-black border-solid rounded-lg"
+                                className="w-full border-2 border-black text-gray-900 border-solid rounded-lg"
                                 placeholder="Email"
                             />
                             <input
                                 {...register('password')}
                                 type="password"
-                                className="w-full border-2 border-black border-solid rounded-lg"
+                                className="w-full border-2 border-black text-gray-900 border-solid rounded-lg"
                                 placeholder="Mật khẩu"
                             />
                             <button

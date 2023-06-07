@@ -24,6 +24,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                                     stage: true,
                                     status: true,
                                     note: true,
+                                    booking: true,
                                     user: {
                                         select: {
                                             name: true,
@@ -37,6 +38,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                         },
                     },
                     profile: true,
+                    userSubscription: true,
                 },
             });
 

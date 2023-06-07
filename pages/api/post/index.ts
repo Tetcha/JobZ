@@ -28,7 +28,8 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     hireJob: req.body.hireJob,
                     name: req.body.name,
                     updateAt: req.body.updateAt,
-                    images: [],
+                    images: req.body.images,
+                    thumbnail: req.body.thumbnail,
                     jobDetail: {
                         create: req.body.jobDetail,
                     },

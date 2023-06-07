@@ -37,7 +37,7 @@ const MyProfileEditPage: React.FunctionComponent<MyProfileEditPageProps> = () =>
 
     const onSubmit = async (data: UpdateProfileInput) => {
         console.log(data);
-        axios.put(`${config.SERVER_URL}/profile`, { ...data, userId: user.id }).then((res) => {
+        axios.put(`/api/profile`, { ...data, userId: user.id }).then((res) => {
             console.log(res);
             updateUserData();
             router.push('/profile');

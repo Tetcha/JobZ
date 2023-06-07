@@ -15,7 +15,7 @@ const MyProfilePage: React.FunctionComponent<MyProfilePageProps> = () => {
     const { data: user } = useQuery<User>(
         ['user', id],
         async () => {
-            const res = await axios.get(`${config.SERVER_URL}/user/${id}`);
+            const res = await axios.get(`/api/user/${id}`);
             return res.data;
         },
         { initialData: { name: '', profile: { avatar: '', cv: '', intro: '', title: '' } } as User }

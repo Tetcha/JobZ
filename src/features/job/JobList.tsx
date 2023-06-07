@@ -72,7 +72,7 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
     const { data: posts } = useQuery<Post[]>(
         ['jobs'],
         async () => {
-            const res = await axios.get(`${config.SERVER_URL}/post`);
+            const res = await axios.get(`/api/post`);
             return res.data;
         },
         {
@@ -167,9 +167,8 @@ const JobList: React.FunctionComponent<JobListProps> = () => {
                                     name={post.name}
                                     id={post.id}
                                     company={post.name}
-                                    companyLogo="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
                                     salary={post.jobDetail.salary}
-                                    thumbnail="https://styles.redditmedia.com/t5_5y10vo/styles/communityIcon_hp8h49lns4l81.png"
+                                    thumbnail={post.thumbnail}
                                     title={`${post.jobDetail.title} - ${post.jobDetail.type}`}
                                     tag={post.hireJob}
                                 />

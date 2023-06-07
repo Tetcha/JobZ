@@ -33,6 +33,18 @@ const defaultValues: UserProps = {
             title: '',
             userId: '',
         },
+        userSubscription: {
+            bookings: 0,
+            endDate: 0,
+            id: '',
+            name: '',
+            posts: 0,
+            price: 0,
+            startDate: 0,
+            userId: '',
+            userRole: 'USER',
+            view: 0,
+        },
     },
     isLogin: false,
     setUser: () => {},
@@ -67,7 +79,7 @@ export const UserProviderContext: React.FC<LoadingProviderProps> = ({ children }
     const { data, isSuccess, refetch } = useQuery<User>(
         ['user', userId],
         async () => {
-            const res = await axios.get(`${config.SERVER_URL}/user/${userId}`);
+            const res = await axios.get(`/api/user/${userId}`);
             return res.data;
         },
         {
@@ -86,8 +98,6 @@ export const UserProviderContext: React.FC<LoadingProviderProps> = ({ children }
             setIsLogin(false);
         }
     }, [isSuccess, data]);
-
-    console.log('User: ', user);
 
     const updateUserData = () => {
         refetch();
